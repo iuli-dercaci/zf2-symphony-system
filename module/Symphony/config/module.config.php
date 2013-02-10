@@ -24,6 +24,16 @@ return array(
                         'action'        => 'index',
                     )
                 )
+            ),
+            'home' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/',
+                    'defaults' => array(
+                        'controller' => 'Symphony\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
             )
         )
     ),
