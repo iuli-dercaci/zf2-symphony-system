@@ -1,6 +1,196 @@
 <?php
 /**
+ * homepage view script
  * @author: Iuli Dercaci <iuli.dercaci@site-me.info>
  * @data: 2/10/13
  */
- 
+$this->headLink()->prependStylesheet($this->basePath() . '/css/datepicker.css');
+$this->headScript()->appendFile($this->basePath() . '/js/bootstrap-datepicker.js');
+$this->inlineScript()->captureStart()?>
+    //datepicker
+    $('#departureDate, #returnDate').datepicker({
+    format: 'dd/mm/yyyy'
+    });
+
+    //show-hide elements
+    $('#one_way').click(function(){
+        if($(this).attr('checked') != true){
+            $('#returnDate').parent('div').hide();
+            $('.multi-city-inputs').hide();
+        }
+    });
+    $('#round_trip').click(function(){
+        if($(this).attr('checked') != true){
+            $('#returnDate').parent('div').show();
+            $('.multi-city-inputs').hide();
+        }
+    })
+    $('#multi_city').click(function(){
+        if($(this).attr('checked') != true){
+            $('#returnDate').parent('div').show();
+            $('.multi-city-inputs').show();
+        }
+    })
+
+    $('.passengers .icon-plus, #passengers').click(function(){
+    $('#passenger-details').show('fast');
+    })
+
+    $('#passenger-details select').change(function(){
+
+    var passengersQty = 0;
+    $('#passenger-details select').each(function(){
+    passengersQty += parseInt($(this).val());
+    })
+    $('#passengers').val(passengersQty);
+    })
+<?php
+$this->inlineScript()->captureEnd();
+?>
+
+<article>
+    <form>
+        <fieldset>
+            <legend>Flight search</legend>
+            <div class="controls-row">
+                <label for="round_trip" class="radio span2">Round trip
+                    <input type="radio" name="option" value="round_trip" id="round_trip" checked="checked" />
+                </label>
+                <label for="one_way" class="radio span2">One way
+                    <input type="radio" name="option" value="one_way" id="one_way" />
+                </label>
+                <label for="multi_city" class="radio span2">Multi city
+                    <input type="radio" name="option" value="multi_city" id="multi_city" />
+                </label>
+            </div>
+            <fieldset>
+                <div class="input-prepend span3">
+                    <label for="arrivalDestination1">From:</label>
+                    <span class="add-on"><i class="icon-circle-arrow-up">&nbsp;</i></span>
+                    <input class="span2" id="arrivalDestination1" name="arrivalDestination1" type="text" />
+                </div>
+                <div class="input-prepend span3">
+                    <label for="departureDestination1">To:</label>
+                    <span class="add-on"><i class="icon-circle-arrow-down">&nbsp;</i></span>
+                    <input class="span2" id="departureDestination1" name="departureDestination1" type="text" />
+                </div>
+            </fieldset>
+            <fieldset class="multi-city-inputs">
+                <div class="input-prepend span3">
+                    <label for="arrivalDestination2">From:</label>
+                    <span class="add-on"><i class="icon-circle-arrow-up">&nbsp;</i></span>
+                    <input class="span2" id="arrivalDestination2" name="arrivalDestination2" type="text" />
+                </div>
+                <div class="input-prepend span3">
+                    <label for="departureDestination2">To:</label>
+                    <span class="add-on"><i class="icon-circle-arrow-down">&nbsp;</i></span>
+                    <input class="span2" id="departureDestination2" name="departureDestination2" type="text" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="input-append span3 date" data-date-format="dd/mm/yyyy">
+                    <label for="departureDate">Departure:</label>
+                    <input class="span2" id="departureDate" name="departureDate" type="text" />
+                    <span class="add-on"><i class="icon-calendar">&nbsp;</i></span>
+                </div>
+                <div class="input-append span3 date" data-date-format="dd/mm/yyyy">
+                    <label for="returnDate">Return:</label>
+                    <input class="span2" id="returnDate" name="returnDate" type="text" />
+                    <span class="add-on"><i class="icon-calendar">&nbsp;</i></span>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="input-prepend input-append span3 passengers">
+                    <label for="passengers">Passengers:</label>
+                    <span class="add-on"><i class="icon-user">&nbsp;</i></span>
+                    <input class="span1" id="passengers" name="passengers" type="text" value="1" disabled="disabled" placeholder="1" />
+                    <span class="add-on"><i class="icon-plus">&nbsp;</i></span>
+                    <fieldset class="form-inline" id="passenger-details">
+                        <div class="control-group">
+                            <label>Adult (25 - 59 yrs)</label>
+                            <select name="ADULT" class="passengers_num span1 valid">
+                                <option value="0">0</option>
+                                <option selected="" value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Child (2 - 11 yrs)</label>
+                            <select name="CHILD" class="passengers_num span1">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Young (12 - 24 yrs)</label>
+                            <select name="YOUNG" class="passengers_num span1">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Senior (60+ yrs)</label>
+                            <select name="SENIOR" class="passengers_num span1">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Infant (0-2)</label>
+                            <select name="INFANT" class="passengers_num span1">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </div>
+            </fieldset>
+            <div class="controls controls-row span3 offset4">
+                <input type="submit" class="btn btn-primary" value="Continue" />
+            </div>
+        </fieldset>
+    </form>
+</article>
+<script>
+
+
+</script>
